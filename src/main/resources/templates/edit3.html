@@ -5,9 +5,9 @@
 </head>
 <body>
 <h1>Edit Order</h1>
-<form th:action="@{/orders/{id}(id=${order.orderId})}" th:object="${order}" method="post">
+<form th:action="@{/orders/{id}(id=${order.orderId})}" method="post">
     <label for="restaurant">Restaurant:</label>
-    <select id="restaurant" name="restaurant.restaurantId" required>
+    <select id="restaurant" name="restaurantId" required>
         <option th:each="restaurant : ${restaurants}"
                 th:value="${restaurant.restaurantId}"
                 th:selected="${restaurant.restaurantId == order.restaurant.restaurantId}"
@@ -15,20 +15,13 @@
         </option>
     </select>
     <br>
-    <label for="dish">Dish:</label>
-    <select id="dish" name="menu.dishId" required>
-        <option th:each="dish : ${dishes}"
-                th:value="${dish.dishId}"
-                th:selected="${dish.dishId == order.menu.dishId}"
-                th:text="${dish.dishName}">
-        </option>
-    </select>
-    <br>
     <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" th:field="*{quantity}" min="1" required />
+    <input type="number" id="quantity" name="quantity" th:value="${order.quantity}" min="1" required />
     <br>
     <button type="submit">Update</button>
 </form>
 <a href="/orders">Back to Orders</a>
+<br>
+<a href="/restaurants/list">Restaurants</a> | <a href="/menu">Menu</a>
 </body>
 </html>

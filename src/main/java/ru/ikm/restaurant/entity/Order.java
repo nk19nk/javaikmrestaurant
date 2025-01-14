@@ -10,12 +10,8 @@ public class Order {
     private Long orderId;
 
     @ManyToOne
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "restaurant_id", nullable = false)
     private Restaurant restaurant;
-
-    @ManyToOne
-    @JoinColumn(name = "dish_id")
-    private Menu menu;
 
     private int quantity;
 
@@ -34,14 +30,6 @@ public class Order {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
     }
 
     public int getQuantity() {
