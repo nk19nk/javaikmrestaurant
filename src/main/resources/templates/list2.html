@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Menu List</title>
+</head>
+<body>
+<h1>Menu</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Dish Name</th>
+        <th>Price</th>
+        <th>Restaurant</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menu : ${menu}">
+        <td th:text="${menu.dishId}"></td>
+        <td th:text="${menu.dishName}"></td>
+        <td th:text="${menu.price}"></td>
+        <td th:text="${menu.restaurant.name}"></td>
+        <td>
+            <a th:href="@{/menu/{id}/edit(id=${menu.dishId})}">Edit</a>
+            <a th:href="@{/menu/{id}/delete(id=${menu.dishId})}"
+               onclick="return confirm('Are you sure you want to delete this dish?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/menu/new">Add New Dish</a>
+<br>
+<a href="/restaurants/list">Restaurants</a> | <a href="/orders">Orders</a>
+</body>
+</html>
