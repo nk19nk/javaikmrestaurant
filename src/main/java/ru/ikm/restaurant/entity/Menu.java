@@ -3,6 +3,8 @@ package ru.ikm.restaurant.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Menu")
@@ -17,6 +19,9 @@ public class Menu {
 
     private String dishName;
     private BigDecimal price;
+
+    @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     // Getters and Setters
 
@@ -50,5 +55,13 @@ public class Menu {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

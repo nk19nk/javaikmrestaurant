@@ -6,6 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "Restaurants")
@@ -16,6 +19,9 @@ public class Restaurant {
 
     private String name;
     private String location;
+
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Menu> menuList = new ArrayList<>();
 
     // Геттеры и сеттеры
     public Long getRestaurantId() {
@@ -40,5 +46,13 @@ public class Restaurant {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 }

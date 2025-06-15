@@ -65,17 +65,6 @@ public class MenuController {
         return "edit2";
     }
 
-//    @PostMapping("/{id}")
-//    public String updateMenu(@PathVariable Long id, @ModelAttribute Menu menu, @RequestParam Long restaurantId) {
-//        menu.setDishId(id);
-//        Restaurant restaurant = restaurantService.findById(restaurantId);
-//        if (restaurant != null) {
-//            menu.setRestaurant(restaurant);
-//        }
-//        menuService.save(menu);
-//        return "redirect:/menu/list2";
-//    }
-
     @GetMapping("/{id}/delete")
     public String deleteMenu(@PathVariable Long id) {
         menuService.delete(id);

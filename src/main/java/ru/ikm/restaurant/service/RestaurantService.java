@@ -1,5 +1,6 @@
 package ru.ikm.restaurant.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.ikm.restaurant.entity.Restaurant;
 import ru.ikm.restaurant.repository.RestaurantRepository;
@@ -28,7 +29,11 @@ public class RestaurantService {
     }
 
     public void delete(Long id) {
-        restaurantRepository.deleteById(id);
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id: " + id));
+        restaurant.getMenuList().size();
+        restaurantRepository.delete(restaurant);
     }
+
 }
 
