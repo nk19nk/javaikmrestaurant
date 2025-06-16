@@ -4,7 +4,7 @@
     <title>Add New Dish</title>
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <h1>Add New Dish</h1>
 <form th:action="@{/menu}" th:object="${menu}" method="post">
     <label for="dishName">Dish Name:</label>
