@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Restaurant Management System</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h1>Restaurant Management Dashboard</h1>
+
+<div style="display: flex; justify-content: space-between;">
+  <div style="width: 32%;">
+    <h2>Latest Restaurants</h2>
+    <table border="1" style="width: 100%">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Location</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="restaurant : ${restaurants}">
+        <td th:text="${restaurant.restaurantId}"></td>
+        <td th:text="${restaurant.name}"></td>
+        <td th:text="${restaurant.location}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <a href="/restaurants/list">View All Restaurants</a>
+  </div>
+
+  <div style="width: 32%;">
+    <h2>Latest Menu Items</h2>
+    <table border="1" style="width: 100%">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Dish Name</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="dish : ${menu}">
+        <td th:text="${dish.dishId}"></td>
+        <td th:text="${dish.dishName}"></td>
+        <td th:text="${dish.price}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <a href="/menu">View Full Menu</a>
+  </div>
+
+  <div style="width: 32%;">
+    <h2>Recent Orders</h2>
+    <table border="1" style="width: 100%">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Dish</th>
+        <th>Qty</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="order : ${orders}">
+        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.dish.dishName}"></td>
+        <td th:text="${order.quantity}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <a href="/orders">View All Orders</a>
+  </div>
+</div>
+</body>
+</html>

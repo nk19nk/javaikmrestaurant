@@ -4,6 +4,7 @@
     <title>Orders List</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
 <h1>Orders</h1>
 <table border="1">
     <thead>
@@ -31,6 +32,5 @@
 </table>
 <a href="/orders/new">Add New Order</a>
 <br>
-<a href="/restaurants/list">Restaurants</a> | <a href="/menu">Menu</a>
 </body>
 </html>

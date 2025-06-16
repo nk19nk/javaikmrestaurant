@@ -4,6 +4,7 @@
     <title>Menu List</title>
 </head>
 <body>
+<div th:replace="fragments/navbar :: navbar"></div>
 <h1>Menu</h1>
 <table border="1">
     <thead>
@@ -31,6 +32,5 @@
 </table>
 <a href="/menu/new">Add New Dish</a>
 <br>
-<a href="/restaurants/list">Restaurants</a> | <a href="/orders">Orders</a>
 </body>
 </html>
