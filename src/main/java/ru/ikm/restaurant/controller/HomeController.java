@@ -25,6 +25,11 @@ import java.util.List;
 // Убраны строки длиной более 100 символов
 // Приведено оформление фигурных скобок к единому стилю (открывающая скобка на новой строке после условия)
 
+/**
+ * Контроллер для отображения главной страницы приложения.
+ * Обрабатывает GET-запрос по корневому пути "/" и предоставляет данные для отображения
+ * на главной странице index.html.
+ */
 @Controller
 public class HomeController {
 
@@ -32,6 +37,13 @@ public class HomeController {
     private final MenuService menuService;
     private final OrderService orderService;
 
+    /**
+     * Конструктор с внедрением зависимостей сервисов.
+     *
+     * @param restaurantService Сервис для работы с ресторанами
+     * @param menuService       Сервис для работы с меню
+     * @param orderService      Сервис для работы с заказами
+     */
     public HomeController(RestaurantService restaurantService,
                           MenuService menuService,
                           OrderService orderService) {
@@ -40,6 +52,14 @@ public class HomeController {
         this.orderService = orderService;
     }
 
+    /**
+     * Обрабатывает GET-запрос по адресу "/".
+     * Получает последние 5 записей из таблиц Restaurant, Menu и Order,
+     * сортирует их по убыванию ID и передаёт во view для отображения.
+     *
+     * @param model Объект модели для передачи данных во view
+     * @return Имя шаблона "index"
+     */
     @GetMapping("/")
     public String index(Model model) {
         // Получаем и сортируем данные по ID в обратном порядке (новые первыми)
