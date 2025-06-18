@@ -1,3 +1,4 @@
+// TODO: реализовать базовый функционал RestaurantService
 package ru.ikm.restaurant.service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -34,7 +35,8 @@ public class RestaurantService {
 
     public void delete(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Restaurant not found with id: " + id));
         restaurant.getMenuList().size();
         restaurantRepository.delete(restaurant);
     }

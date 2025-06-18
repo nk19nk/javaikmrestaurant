@@ -1,3 +1,4 @@
+// TODO: создать сущность Menu
 package ru.ikm.restaurant.entity;
 
 import jakarta.persistence.*;
@@ -14,7 +15,6 @@ import java.util.List;
 @Entity
 @Table(name = "Menu")
 public class Menu {
-    // Геттеры и сеттеры
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,10 @@ public class Menu {
     private Restaurant restaurant;
 
     @NotBlank(message = "Название блюда не может быть пустым")
-    @Pattern(regexp = "^[А-Яа-яA-Za-z\\s]{2,50}$", message = "Название блюда должно содержать только буквы и пробелы (от 2 до 50 символов)")
+    @Pattern(
+            regexp = "^[А-Яа-яA-Za-z\\s]{2,50}$",
+            message = "Название блюда" +
+                    " должно содержать только буквы и пробелы (от 2 до 50 символов)")
     private String dishName;
 
     @NotNull(message = "Цена обязательна для указания")

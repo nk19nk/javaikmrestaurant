@@ -1,3 +1,4 @@
+// TODO: создать базовый JPA репозиторий для сущности Order
 package ru.ikm.restaurant.repository;
 
 

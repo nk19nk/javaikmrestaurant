@@ -1,3 +1,4 @@
+// TODO: создать сущность Order
 package ru.ikm.restaurant.entity;
 
 import jakarta.persistence.*;
@@ -10,7 +11,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "Orders")
 public class Order {
-    // Геттеры и сеттеры
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

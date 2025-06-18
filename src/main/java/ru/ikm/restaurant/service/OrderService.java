@@ -1,3 +1,4 @@
+// TODO: реализовать базовый функционал OrderService
 package ru.ikm.restaurant.service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +23,8 @@ public class OrderService {
 
     public Order findById(Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Order not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Order not found with id: " + id));
     }
 
     public Order save(Order order) {

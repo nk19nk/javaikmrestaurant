@@ -1,3 +1,4 @@
+// TODO: Написать контроллер для работы с сущностью Order
 package ru.ikm.restaurant.controller;
 
 import jakarta.validation.Valid;
@@ -16,14 +17,17 @@ public class OrderController {
     private final OrderService orderService;
     private final MenuService menuService;
 
-    public OrderController(OrderService orderService, MenuService menuService) {
+    public OrderController(OrderService orderService,
+                           MenuService menuService) {
         this.orderService = orderService;
         this.menuService = menuService;
     }
 
     @GetMapping
     public String listOrders(Model model) {
-        model.addAttribute("orders", orderService.findAll());
+        model.addAttribute(
+                "orders", orderService.findAll()
+        );
         return "order/list";
     }
 
@@ -34,35 +38,30 @@ public class OrderController {
         return "order/new";
     }
 
-    // --- ИСПРАВЛЕННЫЙ МЕТОД CREATE ---
     @PostMapping
-    public String createOrder(@Valid @ModelAttribute("order") Order order, BindingResult result, Model model) {
-        // Если есть ошибки валидации (включая невыбранное блюдо)
+    public String createOrder(
+            @Valid @ModelAttribute("order") Order order,
+            BindingResult result, Model model) {
+
         if (result.hasErrors()) {
-            // Возвращаем на форму, снова добавив список блюд
             model.addAttribute("dishes", menuService.findAll());
             return "order/new";
         }
-        // Если все в порядке, Spring уже привязал блюдо. Сохраняем.
         orderService.save(order);
-        // Редирект на основной список заказов
         return "redirect:/order";
     }
 
     @GetMapping("/edit/{id}")
     public String editOrderForm(@PathVariable Long id, Model model) {
         Order order = orderService.findById(id);
-        // Простая проверка, можно оставить или заменить на обработку исключения
         if (order == null) {
             throw new IllegalArgumentException("Order not found with ID: " + id);
         }
         model.addAttribute("order", order);
         model.addAttribute("dishes", menuService.findAll());
-        // Убедитесь, что ваш шаблон называется order/form.html
         return "order/form";
     }
 
-    // --- ИСПРАВЛЕННЫЙ МЕТОД UPDATE ---
     @PostMapping("/{id}")
     public String updateOrder(
             @PathVariable Long id,
@@ -75,10 +74,8 @@ public class OrderController {
             return "order/form";
         }
 
-        // Устанавливаем ID из URL, чтобы обновить правильную запись
         order.setId(id);
         orderService.save(order);
-        // Исправленный редирект
         return "redirect:/order";
     }
 

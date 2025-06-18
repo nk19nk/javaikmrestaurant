@@ -1,3 +1,4 @@
+// TODO: Написать контроллер для работы с сущностью Restaurant
 package ru.ikm.restaurant.controller;
 
 import jakarta.validation.Valid;
@@ -22,7 +23,9 @@ public class RestaurantController {
 
     @GetMapping
     public String listRestaurants(Model model) {
-        model.addAttribute("restaurants", restaurantService.findAll());
+        model.addAttribute(
+                "restaurants", restaurantService.findAll()
+        );
         return "restaurant/list";
     }
 
@@ -41,18 +44,16 @@ public class RestaurantController {
             return "restaurant/new";
         }
         restaurantService.save(restaurant);
-        return "redirect:/restaurant"; // <-- ИСПРАВЛЕНО для единообразия
+        return "redirect:/restaurant";
     }
 
     @GetMapping("/edit/{id}")
     public String editRestaurantForm(@PathVariable Long id, Model model) {
         Restaurant restaurant = restaurantService.findById(id);
-        // Добавим проверку на случай, если ресторан не найден
         if (restaurant == null) {
             return "redirect:/restaurant";
         }
         model.addAttribute("restaurant", restaurant);
-        // Убедитесь, что ваш шаблон называется form.html и лежит в /templates/restaurant/
         return "restaurant/form";
     }
 
@@ -63,17 +64,16 @@ public class RestaurantController {
             BindingResult result
     ) {
         if (result.hasErrors()) {
-            // Если есть ошибки валидации, нужно вернуться на ту же страницу редактирования
             return "restaurant/form";
         }
         restaurant.setId(id);
         restaurantService.save(restaurant);
-        return "redirect:/restaurant"; // Это уже было правильно
+        return "redirect:/restaurant";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteRestaurant(@PathVariable Long id) {
         restaurantService.delete(id);
-        return "redirect:/restaurant"; // Это уже было правильно
+        return "redirect:/restaurant";
     }
 }

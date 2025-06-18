@@ -1,3 +1,4 @@
+// TODO: создать базовый JPA репозиторий для сущности Menu
 package ru.ikm.restaurant.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;

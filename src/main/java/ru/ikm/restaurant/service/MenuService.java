@@ -1,3 +1,4 @@
+// TODO: реализовать базовый функционал MenuService
 package ru.ikm.restaurant.service;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +23,8 @@ public class MenuService {
 
     public Menu findById(Long id) {
         return menuRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Menu not found with id: " + id));
     }
 
     public Menu save(Menu menu) {
@@ -31,7 +33,8 @@ public class MenuService {
 
     public void delete(Long id) {
         Menu menu = menuRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Menu not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Menu not found with id: " + id));
 
         menu.getOrders().size();
         menuRepository.delete(menu);
