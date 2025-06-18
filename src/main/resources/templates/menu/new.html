@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add New Dish</title>
+    <style>
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<h1>Add New Dish</h1>
+
+<form th:action="@{/menu}" th:object="${menu}" method="post">
+    <div>
+        <label for="dishName">Dish Name:</label>
+        <input type="text" id="dishName" th:field="*{dishName}" />
+        <div class="error" th:if="${#fields.hasErrors('dishName')}" th:errors="*{dishName}">Dish Name Error</div>
+    </div>
+    <br>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" th:field="*{price}" step="0.01" />
+        <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</div>
+    </div>
+    <br>
+    <div>
+        <label for="restaurant">Restaurant:</label>
+        <select id="restaurant" th:field="*{restaurant}">
+            <option value="" disabled selected>Select a restaurant</option>
+            <option th:each="restaurant : ${restaurants}"
+                    th:value="${restaurant.id}"
+                    th:text="${restaurant.name}">
+            </option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('restaurant')}" th:errors="*{restaurant}">Restaurant Error</div>
+        <div class="error" th:if="${#fields.hasErrors('restaurant')}" th:errors="*{restaurant}">Restaurant Error</div>
+    </div>
+    <br>
+    <button type="submit">Save</button>
+</form>
+<a href="/menu">Back to Menu</a>
+</body>
+</html>

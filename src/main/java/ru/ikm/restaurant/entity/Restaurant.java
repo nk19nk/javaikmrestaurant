@@ -1,58 +1,33 @@
 package ru.ikm.restaurant.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
-@Data
 @Table(name = "Restaurants")
 public class Restaurant {
+    // Геттеры и сеттеры
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long restaurantId;
+    private Long id;
 
+    @NotBlank(message = "Название ресторана не может быть пустым")
+    @Pattern(regexp = "^[А-Яа-яA-Za-z\\s]{2,50}$", message = "Название ресторана должно содержать только буквы и пробелы (от 2 до 50 символов)")
     private String name;
+
+    @NotBlank(message = "Адрес не может быть пустым")
+    @Pattern(regexp = "^[А-Яа-яA-Za-z0-9\\s,.-]{2,100}$", message = "Адрес должен содержать только допустимые символы (от 2 до 100)")
+    @Pattern(regexp = ".*[А-Яа-яA-Za-z].*", message = "Адрес не может состоять только из цифр и символов")
     private String location;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> menuList = new ArrayList<>();
 
-    // Геттеры и сеттеры
-    public Long getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(Long restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public List<Menu> getMenuList() {
-        return menuList;
-    }
-
-    public void setMenuList(List<Menu> menuList) {
-        this.menuList = menuList;
-    }
 }

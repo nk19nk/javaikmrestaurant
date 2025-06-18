@@ -1,7 +1,9 @@
 package ru.ikm.restaurant.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.ikm.restaurant.entity.Menu;
 import ru.ikm.restaurant.entity.Restaurant;
@@ -23,49 +25,72 @@ public class MenuController {
     @GetMapping
     public String listMenu(Model model) {
         model.addAttribute("menu", menuService.findAll());
-        return "list2";
+        return "menu/list";
     }
 
     @GetMapping("/new")
     public String newMenuForm(Model model) {
         model.addAttribute("menu", new Menu());
         model.addAttribute("restaurants", restaurantService.findAll()); // Передаем список ресторанов
-        return "new2";
+        return "menu/new";
     }
 
     @PostMapping
-    public String createMenu(@ModelAttribute Menu menu, @RequestParam Long restaurantId) {
-        Restaurant restaurant = restaurantService.findById(restaurantId);
-        if (restaurant == null) {
-            throw new IllegalArgumentException("Restaurant not found with ID: " + restaurantId);
+    public String createMenu(@Valid @ModelAttribute("menu") Menu menu,
+                             BindingResult result,
+                             Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("restaurants", restaurantService.findAll());
+            return "menu/new";
         }
-        menu.setRestaurant(restaurant);
+
+        // Проверка существования ресторана
+        if (!restaurantService.existsById(menu.getRestaurant().getId())) {
+            result.rejectValue("restaurant", "error.restaurant", "Ресторан не найден");
+            model.addAttribute("restaurants", restaurantService.findAll());
+            return "menu/new";
+        }
+
         menuService.save(menu);
         return "redirect:/menu";
     }
 
-    @PostMapping("/{id}")
-    public String updateMenu(@PathVariable Long id, @ModelAttribute Menu menu, @RequestParam Long restaurantId) {
-        Restaurant restaurant = restaurantService.findById(restaurantId);
-        if (restaurant == null) {
-            throw new IllegalArgumentException("Restaurant not found with ID: " + restaurantId);
+    @PostMapping("/edit/{id}")
+    public String updateMenu(
+            @PathVariable Long id,
+            @Valid @ModelAttribute("menu") Menu menu, // Используем @ModelAttribute с именем
+            BindingResult result,
+            Model model
+    ) {
+        if (result.hasErrors()) {
+            // Если есть ошибки валидации, возвращаем пользователя на форму.
+            // Нужно снова передать список ресторанов для выпадающего списка.
+            model.addAttribute("restaurants", restaurantService.findAll());
+            // Убедитесь, что ваш шаблон называется form.html
+            return "menu/form";
         }
-        menu.setDishId(id);
-        menu.setRestaurant(restaurant);
+
+        // Важно! Устанавливаем ID из URL, чтобы быть уверенным,
+        // что мы обновляем правильную сущность, а не создаем новую.
+        menu.setId(id);
+
+        // Spring уже автоматически привязал ресторан, можно сохранять.
         menuService.save(menu);
+
+        // Исправленный редирект!
         return "redirect:/menu";
     }
 
-
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String editMenuForm(@PathVariable Long id, Model model) {
         Menu menu = menuService.findById(id);
         model.addAttribute("menu", menu);
         model.addAttribute("restaurants", restaurantService.findAll()); // Для выбора ресторана
-        return "edit2";
+        return "menu/form";
     }
 
-    @GetMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     public String deleteMenu(@PathVariable Long id) {
         menuService.delete(id);
         return "redirect:/menu";

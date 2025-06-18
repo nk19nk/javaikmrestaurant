@@ -1,67 +1,38 @@
 package ru.ikm.restaurant.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "Menu")
 public class Menu {
+    // Геттеры и сеттеры
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long dishId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
+    @NotNull(message = "Ресторан обязателен для указания")
     private Restaurant restaurant;
 
+    @NotBlank(message = "Название блюда не может быть пустым")
+    @Pattern(regexp = "^[А-Яа-яA-Za-z\\s]{2,50}$", message = "Название блюда должно содержать только буквы и пробелы (от 2 до 50 символов)")
     private String dishName;
+
+    @NotNull(message = "Цена обязательна для указания")
+    @DecimalMin(value = "0.01", message = "Цена должна быть больше 0")
     private BigDecimal price;
 
     @OneToMany(mappedBy = "dish", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Order> orders = new ArrayList<>();
 
-    // Getters and Setters
-
-    public Long getDishId() {
-        return dishId;
-    }
-
-    public void setDishId(Long dishId) {
-        this.dishId = dishId;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public String getDishName() {
-        return dishName;
-    }
-
-    public void setDishName(String dishName) {
-        this.dishName = dishName;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }

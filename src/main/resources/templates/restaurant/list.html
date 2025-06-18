@@ -17,18 +17,21 @@
     </thead>
     <tbody>
     <tr th:each="restaurant : ${restaurants}">
-        <td th:text="${restaurant.restaurantId}"></td>
+        <td th:text="${restaurant.id}"></td>
         <td th:text="${restaurant.name}"></td>
         <td th:text="${restaurant.location}"></td>
         <td>
-            <a th:href="@{/restaurants/edit/{id}(id=${restaurant.restaurantId})}">Edit</a>
-            <a th:href="@{/restaurants/delete/{id}(id=${restaurant.restaurantId})}"
-               onclick="return confirm('Are you sure you want to delete this restaurant?');">Delete</a>
-        </td>
+            <a th:href="@{/restaurant/edit/{id}(id=${restaurant.id})}">Edit</a>
+            <form th:action="@{/restaurant/delete/{id}(id=${restaurant.id})}"
+                  th:method="post"
+                  style="display: inline;"
+                  onsubmit="return confirm('Вы уверены?');">
+                <button type="submit" class="link-button">Delete</button>
+            </form>        </td>
     </tr>
     </tbody>
 </table>
-<a href="/restaurants/new">Add New Restaurant</a>
+<a href="/restaurant/new">Add New Restaurant</a>
 <br>
 </body>
 </html>

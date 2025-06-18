@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Restaurant</title>
+    <style>
+        .error { color: red; }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<h1>Edit Restaurant</h1>
+
+<form th:action="@{/restaurant/{id}(id=${restaurant.id})}"
+      th:object="${restaurant}"
+      method="post">
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </div>
+    <br>
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" th:field="*{location}" />
+        <div class="error" th:if="${#fields.hasErrors('location')}" th:errors="*{location}">Location Error</div>
+    </div>
+    <br>
+    <button type="submit">Update</button>
+</form>
+<a href="/restaurant">Back to Restaurants</a>
+<br>
+</body>
+</html>

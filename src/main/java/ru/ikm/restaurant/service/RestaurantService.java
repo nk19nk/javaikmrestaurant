@@ -24,6 +24,10 @@ public class RestaurantService {
         return restaurantRepository.findById(id).orElse(null);
     }
 
+    public boolean existsById(Long id) {
+        return restaurantRepository.existsById(id);
+    }
+
     public Restaurant save(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }

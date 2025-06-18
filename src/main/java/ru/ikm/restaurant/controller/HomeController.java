@@ -33,19 +33,19 @@ public class HomeController {
         // Получаем и сортируем данные по ID в обратном порядке (новые первыми)
         List<Restaurant> restaurants = restaurantService.findAll()
                 .stream()
-                .sorted(Comparator.comparingLong(Restaurant::getRestaurantId).reversed())
+                .sorted(Comparator.comparingLong(Restaurant::getId).reversed())
                 .limit(5)
                 .toList();
 
         List<Menu> menu = menuService.findAll()
                 .stream()
-                .sorted(Comparator.comparingLong(Menu::getDishId).reversed())
+                .sorted(Comparator.comparingLong(Menu::getId).reversed())
                 .limit(5)
                 .toList();
 
         List<Order> orders = orderService.findAll()
                 .stream()
-                .sorted(Comparator.comparingLong(Order::getOrderId).reversed())
+                .sorted(Comparator.comparingLong(Order::getId).reversed())
                 .limit(5)
                 .toList();
 

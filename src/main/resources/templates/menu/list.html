@@ -18,14 +18,13 @@
     </thead>
     <tbody>
     <tr th:each="menu : ${menu}">
-        <td th:text="${menu.dishId}"></td>
+        <td th:text="${menu.id}"></td>
         <td th:text="${menu.dishName}"></td>
         <td th:text="${menu.price}"></td>
         <td th:text="${menu.restaurant.name}"></td>
         <td>
-            <a th:href="@{/menu/{id}/edit(id=${menu.dishId})}">Edit</a>
-            <a th:href="@{/menu/{id}/delete(id=${menu.dishId})}"
-               onclick="return confirm('Are you sure you want to delete this dish?');">Delete</a>
+            <a th:href="@{/menu/edit/{id}(id=${menu.id})}">Edit</a>
+            <a th:href="@{/menu/delete/{id}(id=${menu.id})}" onclick="return confirm('Are you sure?')">Delete</a>
         </td>
     </tr>
     </tbody>

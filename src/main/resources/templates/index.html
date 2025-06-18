@@ -20,13 +20,13 @@
       </thead>
       <tbody>
       <tr th:each="restaurant : ${restaurants}">
-        <td th:text="${restaurant.restaurantId}"></td>
+        <td th:text="${restaurant.id}"></td>
         <td th:text="${restaurant.name}"></td>
         <td th:text="${restaurant.location}"></td>
       </tr>
       </tbody>
     </table>
-    <a href="/restaurants/list">View All Restaurants</a>
+    <a href="/restaurant">View All Restaurants</a>
   </div>
 
   <div style="width: 32%;">
@@ -41,7 +41,7 @@
       </thead>
       <tbody>
       <tr th:each="dish : ${menu}">
-        <td th:text="${dish.dishId}"></td>
+        <td th:text="${dish.id}"></td>
         <td th:text="${dish.dishName}"></td>
         <td th:text="${dish.price}"></td>
       </tr>
@@ -62,13 +62,13 @@
       </thead>
       <tbody>
       <tr th:each="order : ${orders}">
-        <td th:text="${order.orderId}"></td>
+        <td th:text="${order.id}"></td>
         <td th:text="${order.dish.dishName}"></td>
         <td th:text="${order.quantity}"></td>
       </tr>
       </tbody>
     </table>
-    <a href="/orders">View All Orders</a>
+    <a href="/order">View All Orders</a>
   </div>
 </div>
 </body>
